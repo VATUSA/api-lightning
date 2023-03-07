@@ -23,14 +23,13 @@ async def solo_list():
             expires=s.expires,
             created_at=s.created_at,
             updated_at=s.updated_at,
-            **{'from': p.from_}
+            **{'from': s.from_}
         
         ) for s in solos
     ])
 
 @router.post('/', response_model=generic_models.GenericResponse)
 async def solo_create(
-        id: int = Form(),
         cid: int = Form(),
         position: str = Form(),
         expires: datetime.date = Form(),
