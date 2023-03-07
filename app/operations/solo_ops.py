@@ -6,19 +6,15 @@ from app.database.legacy.models import Solo
 
 
 async def create_solo(
-        id: int,
         cid: int,
         position: str,
-        expires: datetime.date,
-        created_at: datetime.datetime,
-        updated_at: datetime.datetime) -> Solo:
+        expires: datetime.date) -> Solo:
     rec=Solo(
-        id=id,
         cid=cid,
         position=position,
         expires=expires,
-        created_at=created_at,
-        updated_at=updated_at,
+        created_at=datetime.datetime.now(),
+        updated_at=datetime.datetime.now(),
     )
     await rec.save()
     return rec
