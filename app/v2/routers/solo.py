@@ -1,5 +1,5 @@
 from typing import List
-
+import datetime
 from fastapi import APIRouter
 from app.database.legacy.models import Solo
 from app.operations import solo_ops
@@ -32,16 +32,11 @@ async def solo_list():
 async def solo_create(
         cid: int = Form(),
         position: str = Form(),
-        expires: datetime.date = Form(),
-        created_at: datetime.datetime = Form(),
-        updated_at: datetime.datetime = Form()):
+        expires: datetime.date = Form()):
     rec = await solo_ops.create_solo(
-        id=id,
         cid=cid,
         position=position,
-        expires=expires,
-        created_at=created_at,
-        updated_at=updated_at
+        expires=expires
     )
     return generic_models.GenericResponse(status="OK", id=rec.id)
 
