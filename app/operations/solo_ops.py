@@ -19,13 +19,7 @@ async def create_solo(
     await rec.save()
     return rec
 
-async def delete_solo(id: typing.Optional[int], cid: typing.Optional[int], position: typing.Optional[str]):
-    if id is not None:
-        solo = await Solo.objects.get(id=id)
-        await solo.delete()
-    elif cid is not None and position is not None:
-        solo = await Solo.objects.get(cid=cid, position=position)
-        await solo.delete()
-    else:
-        raise HTTPException(400, "Missing field. Must include id or cid and position")
-
+async def delete_solo(id: int):
+       solo = await Solo.objects.get(id=id)
+       await solo.delete()
+    
