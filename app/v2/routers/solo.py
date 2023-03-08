@@ -47,10 +47,10 @@ async def solo_delete(
         cid: int = Form(),
         position: str = Form()):
     if id is not None: 
-        rec = await solo_ops.delete_solo(id=id)    
+        rec = await solo_ops.delete_solo(id)    
     elif cid is not None and position is not None:
         solo = await Solo.objects.get(cid=cid, position=position)
-        rec = await solo_ops.delete_solo(id=id)    
+        rec = await solo_ops.delete_solo(solo.id)    
     else:
         raise HTTPException(400, "Missing field. Must include id or cid and position")
 
