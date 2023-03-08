@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get('/', response_model=List[solo_models.Solo])
+@router.get('/', response_model=generic_models.DataResponse[List[solo_models.Solo]])
 async def solo_list():
     solos: List[Solo] = await Solo.objects.all() 
     return generic_models.DataResponse(data=[
