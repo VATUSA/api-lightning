@@ -36,7 +36,7 @@ async def solo_create(
         expires: datetime.date = Form()):
     if datetime.date.today() - expires > 30:
          raise HTTPException(400, "Invalid expiration date. Solo certification can last a maximum of 30 days")
-    if not re.match(r"^([A-Z0-9]{2,3})_(APP|DEP|CTR)$", position):
+    if not re.match(r"^([A-Z0-9]{2,3})_(APP|CTR)$", position):
         raise HTTPException(400, "Invalid position. Must be valid TRACON/Enroute position")
     rec = await solo_ops.create_solo(
         cid=cid,
