@@ -47,7 +47,7 @@ async def training_record_edit(
     location: int = Form(),
     ots_status: int = Form(),
     solo_granted: bool = Form()):
-    if not re.match(r"^([A-Z0-9]{2,3})_(DEL|GND|TWR|APP|CTR)$", position):
+    if not re.match(r"^([A-Z0-9]{2,3})_(DEL|GND|TWR|APP|DEP|CTR)$", position):
         raise HTTPException(400, "Invalid position. Must be a valid position")
     if score not in range(1, 6):
         raise HTTPException(400, "Invalid score. Must be integer 1-5")
