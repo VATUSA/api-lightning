@@ -1,6 +1,40 @@
 import datetime
+from typing import Optional
 from app.database.legacy.models import TrainingRecord
 
+async def edit_training_record(
+        record_id: int,
+        session_date: Optional[datetime.datetime],
+        position: Optional[str],
+        duration: Optional[str],
+        movements: Optional[int],
+        score: Optional[int],
+        notes: Optional[str],
+        location: Optional[int],
+        ots_status: Optional[int],
+        solo_granted: Optional[bool]) -> TrainingRecord:
+    rec = await TrainingRecord.objects.get(id=record_id)
+    if session_date is not None:
+        await rec.update(session_date=session_date)
+    if position is not None:
+        await rec.update(position=position)
+    if duration is not None:
+        await rec.update(duration=duration)
+    if movements is not None:
+        await rec.update(movements=movements)
+    if score is not None:
+        await rec.update(score=score)
+    if notes is not None:
+        await rec.update(notes=notes)
+    if location is not None:
+        await rec.update(location=location)
+    if ots_status is not None:
+        await rec.update(ots_status=ots_status)
+    if solo_granted is not None:
+        await rec.update(solo_granted=solo_granted)
+    await rec.update(updated_at=datetime.datetime.now())
+    await rec.save()
+    return rec
 
 async def create_training_record(
         student_cid: int,
