@@ -34,19 +34,18 @@ async def solo_create(
         cid: int = Form(),
         position: str = Form(),
         expires: datetime.date = Form()):
-    if datetime.date.today() - expires < 31:
-        if re.match(r"^([A-Z0-9]{2,3})_(APP|CTR)$", position):
-            rec = await solo_ops.create_solo(
-                cid=cid,
-                position=position,
-                expires=expires
-            )
-            return generic_models.GenericResponse(status="OK", id=rec.id)
-        else:
-            raise HTTPException(400, "Invalid position. Must be valid TRACON/Enroute position")
-
-    else:
-        raise HTTPException(400, "Invalid expiration date. Solo certification can last a maximum of 30 days")
+    if datetime.date.today() - expires > 30:
+         raise HTTPException(400, "Invalid expiration date. Solo certification can last a maximum of 30 days")
+    if not re.match(r"^([A-Z0-9]{2,3})_(APP|CTR)$", position):
+        raise HTTPException(400, "Invalid position. Must be valid TRACON/Enroute position")
+    rec = await solo_ops.create_solo(
+        cid=cid,
+        position=position,
+        expires=expires
+    )
+    return generic_models.GenericResponse(status="OK", id=rec.id)
+       
+       
 
 
 @router.delete('/', response_model=generic_models.GenericResponse)
