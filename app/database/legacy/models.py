@@ -91,6 +91,16 @@ class Role(ormar.Model):
     role: str = ormar.String(max_length=12)
     created_at: datetime.datetime = ormar.DateTime()
 
+class Solo(ormar.Model):
+    class Meta(BaseMeta):
+        tablename = 'solo_certs'
+    id: int = ormar.Integer(primary_key=True)
+    cid: Controller = ormar.ForeignKey(Controller)
+    position: str = ormar.String(max_length=11)
+    expires: datetime.date = ormar.Date(nullable=True)
+    created_at: datetime.datetime = ormar.DateTime()
+    updated_at: datetime.datetime = ormar.DateTime()
+
 
 class TrainingRecord(ormar.Model):
     class Meta(BaseMeta):
