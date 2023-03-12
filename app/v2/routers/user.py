@@ -42,6 +42,15 @@ async def user_training_record_create(
         location: int = Form(),
         ots_status: int = Form(),
         solo_granted: bool = Form()):
+    if not re.match(r"^([A-Z0-9]{2,3})_(DEL|GND|TWR|APP|DEP|CTR)$", position):
+        raise HTTPException(400, "Invalid position. Must be a valid position")
+    if score not in range(1, 6):
+        raise HTTPException(400, "Invalid score. Must be integer 1-5")
+    if location not in range(0, 3):
+        raise HTTPException(400, "Invalid location. Must be integer 0-2")
+    if ots_status not in range(0, 4):
+        raise HTTPException(400, "Invalid ots_status. Must be integer 0-3")
+        
     rec = await training_ops.create_training_record(cid, instructor_id, facility_id, session_date, position, duration,
                                                     movements, score, notes, location, ots_status, solo_granted)
     return generic_models.GenericResponse(status="OK", id=rec.id)
